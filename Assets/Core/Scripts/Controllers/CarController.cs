@@ -1,3 +1,4 @@
+using CustomEventSystem;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,16 @@ public class CarController : MonoBehaviour
 
     private GateData data;
     private ParkArea currentParkArea;
+
+    private void OnEnable()
+    {
+        Events.OnLevelSuccess.AddListener(WinAnimation);
+    }
+
+    private void OnDisable()
+    {
+        Events.OnLevelSuccess.RemoveListener(WinAnimation);
+    }
 
     public void InitialiseCar(GateData gateData)
     {
@@ -66,6 +77,11 @@ public class CarController : MonoBehaviour
             Instantiate(parkEffectPrefab, transform.position + Vector3.up * 10, parkEffectPrefab.transform.rotation).PlayEffect(false);
             InterruptMovement();
         }
+    }
+
+    private void WinAnimation()
+    {
+        transform.DOPunchScale(Vector3.one * 0.2f, 0.5f, 1, 0).SetDelay(Random.Range(0.1f, 0.5f));
     }
 
     private void InterruptMovement()

@@ -1,3 +1,4 @@
+using CustomEventSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class GameManager : Singleton<GameManager>
             return;
 
         isStageCompleted = true;
-
+        Events.OnLevelSuccess.Invoke();
         StartCoroutine(CompleteStageCo(isSuccess, delay));
     }
 
