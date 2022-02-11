@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class CarController : MonoBehaviour
 
     public void HandleMovement(Path targetPath)
     {
-        //car movement logic
+        targetPath.ParkArea.IsParked = true;
+        var pathTween = transform.DOPath(targetPath.dtPath.wps.ToArray(), data.CarSpeed, PathType.CatmullRom, PathMode.Full3D, 10, Color.red).SetSpeedBased();
+        pathTween.SetLookAt(-1, true);
     }
 }

@@ -33,6 +33,8 @@ public class PlatformController : MonoBehaviour
         }
     }
 
+
+
     private int GetRandomParkCount(GateData gateData, int maxCount)
     {
         return Random.Range(gateData.MinimumParkCount, maxCount);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParkArea : MonoBehaviour
 {
     private bool isParked;
-    public bool IsParked { get { return isParked; } }
+    public bool IsParked { get { return isParked; } set { isParked = value; } }
 
     private bool isInitialised;
     public bool IsInitialised { get { return isInitialised; } }

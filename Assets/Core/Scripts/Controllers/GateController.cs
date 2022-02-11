@@ -1,4 +1,5 @@
 using CustomEventSystem;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,16 @@ public class GateController : MonoBehaviour
     public GateData GateData;
     [SerializeField] private Path[] paths;
     [SerializeField] private Renderer barrierMesh;
+    [SerializeField] private Transform carCreationPoint;
+
+    private const float CAR_CREATION_OFFSET = 13f;
 
     private GateButtonController gateButton;
     public GateButtonController GateButton { get { return gateButton == null ? gateButton = GetComponentInChildren<GateButtonController>() : gateButton; } }
 
     private List<CarController> cars = new List<CarController>();
+
+    private bool isOpen;
 
     public int PathCount { get { return paths.Length; } }
 
@@ -31,9 +37,9 @@ public class GateController : MonoBehaviour
     {
         SetColor();
 
-        for (int i = 0; i < desiredParkCount; i++)
+        for (int i = 0; i <= desiredParkCount; i++)
         {
-            CarController car = Instantiate(GateData.CarPrefab, transform).GetComponent<CarController>();
+            CarController car = Instantiate(GateData.CarPrefab, carCreationPoint.position + (Vector3.forward * (i * CAR_CREATION_OFFSET)), GateData.CarPrefab.transform.rotation).GetComponent<CarController>();
             car.InitialiseCar(GateData);
             cars.Add(car);
 
@@ -48,8 +54,10 @@ public class GateController : MonoBehaviour
         if (type != GateData.GateType)
             return;
 
+        if (isOpen)
+            return;
 
-        SendNextCar();
+        GateAnimation();
     }
 
     private void SetColor()
@@ -74,7 +82,19 @@ public class GateController : MonoBehaviour
 
     private void ReorderCars()
     {
-        //car positioning
+        foreach (var car in cars)
+        {
+            car.transform.DOMoveZ(car.transform.position.z - CAR_CREATION_OFFSET, 1f);
+        }
+    }
+
+    private void GateAnimation()
+    {
+        isOpen = true;
+        Sequence anim = DOTween.Sequence();
+
+        anim.Append(barrierMesh.transform.DOLocalRotate(barrierMesh.transform.localEulerAngles + Vector3.forward * -90f, GateData.GateOpenSpeed / 2).SetSpeedBased());
+        anim.Append(barrierMesh.transform.DOLocalRotate(barrierMesh.transform.localEulerAngles + Vector3.forward * 0, GateData.GateOpenSpeed / 2).SetSpeedBased().OnComplete(() => isOpen = false).OnStart(SendNextCar).SetDelay(0.5f));
     }
 
     private Path GetNextPossiblePath()
