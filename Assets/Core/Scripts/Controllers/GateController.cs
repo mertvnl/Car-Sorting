@@ -37,13 +37,14 @@ public class GateController : MonoBehaviour
     {
         SetColor();
 
-        for (int i = 0; i <= desiredParkCount; i++)
+        for (int i = 0; i < desiredParkCount; i++)
         {
             CarController car = Instantiate(GateData.CarPrefab, carCreationPoint.position + (Vector3.forward * (i * CAR_CREATION_OFFSET)), GateData.CarPrefab.transform.rotation).GetComponent<CarController>();
             car.InitialiseCar(GateData);
             cars.Add(car);
 
-            GetEmptyPath().ParkArea.InitialiseParkArea(GateData);
+            Path emptyPath = GetEmptyPath();
+            emptyPath.ParkArea.InitialiseParkArea(GateData);
         }
 
         GateButton.InitialiseButton(GateData);
@@ -75,7 +76,12 @@ public class GateController : MonoBehaviour
             return;
 
         CarController nextCar = cars[0];
-        nextCar.HandleMovement(GetNextPossiblePath());
+
+        Path nextPath = GetNextPossiblePath();
+        if (nextPath == null)
+            nextPath = GetClosestPath(nextCar.transform.position);
+
+        nextCar.HandleMovement(nextPath);
         cars.Remove(nextCar);
         ReorderCars();
     }
@@ -84,7 +90,7 @@ public class GateController : MonoBehaviour
     {
         foreach (var car in cars)
         {
-            car.transform.DOMoveZ(car.transform.position.z - CAR_CREATION_OFFSET, 1f);
+            car.transform.DOMoveZ(car.transform.position.z - CAR_CREATION_OFFSET, 1f).SetEase(Ease.InOutSine);
         }
     }
 
@@ -93,8 +99,8 @@ public class GateController : MonoBehaviour
         isOpen = true;
         Sequence anim = DOTween.Sequence();
 
-        anim.Append(barrierMesh.transform.DOLocalRotate(barrierMesh.transform.localEulerAngles + Vector3.forward * -90f, GateData.GateOpenSpeed / 2).SetSpeedBased());
-        anim.Append(barrierMesh.transform.DOLocalRotate(barrierMesh.transform.localEulerAngles + Vector3.forward * 0, GateData.GateOpenSpeed / 2).SetSpeedBased().OnComplete(() => isOpen = false).OnStart(SendNextCar).SetDelay(0.5f));
+        anim.Append(barrierMesh.transform.DOLocalRotate(barrierMesh.transform.localEulerAngles + Vector3.forward * -90f, GateData.GateOpenSpeed / 2)).SetSpeedBased().OnStart(SendNextCar);
+        anim.Append(barrierMesh.transform.DOLocalRotate(barrierMesh.transform.localEulerAngles + Vector3.forward * 0, GateData.GateOpenSpeed / 2).OnComplete(() => isOpen = false).SetDelay(0.5f)).SetSpeedBased();
     }
 
     private Path GetNextPossiblePath()
@@ -111,6 +117,26 @@ public class GateController : MonoBehaviour
         }
 
         return nextPath;
+    }
+
+    private Path GetClosestPath(Vector3 positionToCompare)
+    {
+        Path closestPath = null;
+        float distance = Mathf.Infinity;
+        float currentDist = 0;
+
+        foreach (var path in paths)
+        {
+            currentDist = Vector3.Distance(positionToCompare, path.ParkArea.transform.position);
+
+            if (currentDist < distance)
+            {
+                closestPath = path;
+                distance = currentDist;
+            }
+        }
+
+        return closestPath;
     }
 
     private Path GetEmptyPath()

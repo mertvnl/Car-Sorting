@@ -10,6 +10,8 @@ public class ParkArea : MonoBehaviour
     private bool isInitialised;
     public bool IsInitialised { get { return isInitialised; } }
 
+    public GateType GateType { get { return data.GateType; } }
+
     private GateData data;
     public void InitialiseParkArea(GateData gateData)
     {

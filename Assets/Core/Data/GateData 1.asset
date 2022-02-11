@@ -18,4 +18,5 @@ MonoBehaviour:
   GateOpenSpeed: 1
   MinimumParkCount: 2
   CarPrefab: {fileID: 4073182425367130260, guid: 7dcfbac99249d8c4e8fb70e7fcac6fd2, type: 3}
-  CarSpeed: 25
+  CarSpeed: 35
+  CarEaseType: 4

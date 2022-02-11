@@ -16,6 +16,8 @@ public class PlatformController : MonoBehaviour
 
         int totalParkArea = GetComponentsInChildren<ParkArea>().Length;
 
+        GameManager.Instance.SetTotalCar(totalParkArea);
+
         foreach (var gate in gates)
         {
             int parkCount;
@@ -29,6 +31,7 @@ public class PlatformController : MonoBehaviour
                 totalParkArea -= parkCount;
             }
 
+            Debug.Log(gate.name + " selectec park count : " + parkCount + " available path count " + gate.PathCount);
             gate.InitialiseGate(parkCount);
         }
     }
@@ -37,6 +40,6 @@ public class PlatformController : MonoBehaviour
 
     private int GetRandomParkCount(GateData gateData, int maxCount)
     {
-        return Random.Range(gateData.MinimumParkCount, maxCount);
+        return Random.Range(gateData.MinimumParkCount, maxCount - 1);
     }
 }

@@ -28,4 +28,5 @@ public class GateData : ScriptableObject
     [Header("Car Settings")]
     public GameObject CarPrefab;
     public float CarSpeed;
+    public Ease CarEaseType;
 }
