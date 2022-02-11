@@ -9,12 +9,19 @@ public class GameManager : Singleton<GameManager>
     private int totalCarToPark;
     private int currentParkAmount;
 
-    public void CompleteStage(bool isSuccess)
+    public void CompleteStage(bool isSuccess, float delay = 0)
     {
         if (isStageCompleted)
             return;
 
         isStageCompleted = true;
+
+        StartCoroutine(CompleteStageCo(isSuccess, delay));
+    }
+
+    private IEnumerator CompleteStageCo(bool isSuccess, float delay = 0)
+    {
+        yield return new WaitForSeconds(delay);
 
         if (isSuccess)
             LevelManager.Instance.RestartLevel();
@@ -36,6 +43,6 @@ public class GameManager : Singleton<GameManager>
     public void CheckParkStatus()
     {
         if (currentParkAmount >= totalCarToPark)
-            CompleteStage(true);
+            CompleteStage(true, 5);
     }
 }
