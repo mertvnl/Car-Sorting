@@ -40,6 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4385681409138612748}
+  - component: {fileID: 5112272189052562446}
+  - component: {fileID: 2497017000794829004}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -62,6 +64,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5112272189052562446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385681409138612751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3492beb7ff139c249b378be81a3caf06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonMesh: {fileID: 7748006825893027380}
+--- !u!135 &2497017000794829004
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385681409138612751}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7.28045
+  m_Center: {x: -0.3843236, y: 5.627327, z: 0.9992428}
 --- !u!1001 &4385681407890700161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,9 +161,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 37e45c3219492aa48920980ee2043cba, type: 2}
+    - target: {fileID: 487459384268300218, guid: dc7d73f5dfd2e814cb11511d6bdef6a9, type: 3}
+      propertyPath: m_Name
+      value: Button
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc7d73f5dfd2e814cb11511d6bdef6a9, type: 3}
       propertyPath: m_Name
       value: button
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276779827138096988, guid: dc7d73f5dfd2e814cb11511d6bdef6a9, type: 3}
+      propertyPath: m_Name
+      value: ButtonBot
       objectReference: {fileID: 0}
     - target: {fileID: 6294731734008981941, guid: dc7d73f5dfd2e814cb11511d6bdef6a9, type: 3}
       propertyPath: m_CastShadows
@@ -150,5 +186,10 @@ PrefabInstance:
 --- !u!4 &4276074922186461290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dc7d73f5dfd2e814cb11511d6bdef6a9, type: 3}
+  m_PrefabInstance: {fileID: 4385681407890700161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7748006825893027380 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6294731734008981941, guid: dc7d73f5dfd2e814cb11511d6bdef6a9, type: 3}
   m_PrefabInstance: {fileID: 4385681407890700161}
   m_PrefabAsset: {fileID: 0}
