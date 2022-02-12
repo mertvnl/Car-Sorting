@@ -44,6 +44,6 @@ public class GameManager : Singleton<GameManager>
     public void CheckParkStatus()
     {
         if (currentParkAmount >= totalCarToPark)
-            CompleteStage(true, 5);
+            CompleteStage(true, 2.5f);
     }
 }
