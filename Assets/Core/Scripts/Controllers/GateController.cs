@@ -37,9 +37,25 @@ public class GateController : MonoBehaviour
     {
         SetColor();
 
-        for (int i = 0; i < desiredParkCount; i++)
+        int parkCount = desiredParkCount;
+
+        for (int i = 0; i < GateData.MinimumParkCount; i++)
         {
             CarController car = Instantiate(GateData.CarPrefab, carCreationPoint.position + (Vector3.forward * (i * CAR_CREATION_OFFSET)), GateData.CarPrefab.transform.rotation).GetComponent<CarController>();
+            car.InitialiseCar(GateData);
+            cars.Add(car);
+
+            Path emptyPath = paths[i];
+            if (!emptyPath.ParkArea.IsInitialised)
+            {
+                parkCount--;
+                emptyPath.ParkArea.InitialiseParkArea(GateData);
+            }
+        }
+
+        for (int i = 0; i < parkCount; i++)
+        {
+            CarController car = Instantiate(GateData.CarPrefab, cars.Last().transform.position + (Vector3.forward * CAR_CREATION_OFFSET), GateData.CarPrefab.transform.rotation).GetComponent<CarController>();
             car.InitialiseCar(GateData);
             cars.Add(car);
 

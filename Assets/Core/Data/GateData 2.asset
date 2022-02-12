@@ -16,7 +16,7 @@ MonoBehaviour:
   MainColor: {r: 0.9033947, g: 0, b: 1, a: 1}
   SecondaryColor: {r: 0.62445116, g: 0, b: 1, a: 1}
   GateOpenSpeed: 1
-  MinimumParkCount: 2
+  MinimumParkCount: 1
   CarPrefab: {fileID: 4073182425367130260, guid: 7dcfbac99249d8c4e8fb70e7fcac6fd2, type: 3}
   CarSpeed: 35
   CarEaseType: 4
