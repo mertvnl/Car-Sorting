@@ -31,7 +31,6 @@ public class PlatformController : MonoBehaviour
                 totalParkArea -= parkCount;
             }
 
-            Debug.Log(gate.name + " selectec park count : " + parkCount + " available path count " + gate.PathCount);
             gate.InitialiseGate(parkCount);
         }
     }
